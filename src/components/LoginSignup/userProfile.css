@@ -1,0 +1,22 @@
+.parent {
+  width: 300px;
+  margin-top: 40px;
+}
+.words {
+  text-align: left;
+}
+.title {
+  color: #01303f;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.desc {
+  color: #717171;
+  font-weight: normal;
+}
+
+
+.title-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent */
+}

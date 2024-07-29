@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="navBarStyles.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> 
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<!--  -->
+    <meta charset="UTF-8">
+    <title>GrapesJS Website Builder with Tailwind and Custom Blocks</title>
+    <!-- GrapesJS CSS from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+    <!-- GrapesJS JS from CDN -->
+    <script src="https://unpkg.com/grapesjs"></script>
+    <script src="https://unpkg.com/grapesjs-tailwind"></script>
+    <!-- Custom CSS -->
+    <style>
+        body, html {
+            margin: 0;
+            height: 100%;
+        }
+        :root {
+            --gjs-quaternary-color: #02a9f7;
+    --gjs-primary-color:#01303f;
+  }
+  body{
+    background-color: var(--main-bg-color);
+  }
+        /* Custom button styles */
+        .change-theme-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 5px;
+            
+        }
+
+        .change-theme-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2pt #01303f;
+            
+        }
+
+        /* Make blocks full width */
+        .gjs-block {
+            padding: 0 !important;
+            width: 100% !important;
+            min-height: auto !important;
+            background-color: var(--main-bg-color);
+        }
+
+        /* Fit icons properly */
+        .gjs-block svg {
+            width: 100%;
+            background-color: var(--main-bg-color);
+        }
+
+        /* Custom style for the block manager */
+        #blocks {
+            padding: 10px;
+            border-right: 1px solid #01303f;
+            background-color: #01303f;
+        }
+
+        /* GrapesJS container with default style */
+        #gjs {
+            height: 600px;
+            border: 1px solid #01303f;
+            padding: 10px;
+            background-color: #01303f;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/">
+          <img src="logo.png" alt="logo" class="logo" width="220" height="40">
+        </a>
+        <div>
+          <ul id="navBar">
+            <li>
+              <a href="/" class="active">Home</a>
+            </li>
+            <li>
+              <a href="/#about">About us</a>
+            </li>
+            <li>
+              <a href="/#tech">Technology</a>
+            </li>
+            <li>
+              <a href="/#contact-us">Contact us</a>
+            </li>
+            <li>
+              <a href="/login">
+                <img src="person.png" alt="">
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="mobile" onclick="handleClicked()">
+          <i id="bar" class="fas fa-bars"></i>
+        </div>
+      </nav>
+    <div style="display: flex; height: 100%;">
+        <!-- Block Manager Container -->
+        <div id="blocks"></div>
+        <!-- Container for GrapesJS -->
+        <div id="gjs"></div>
+    </div>
+
+    <!-- Initialize GrapesJS -->
+    <script>
+        let clicked = false;
+    function handleClicked() {
+      clicked = !clicked;
+      const navBar = document.getElementById('navBar');
+      const bar = document.getElementById('bar');
+      if (clicked) {
+        navBar.className = 'navBar active';
+        bar.className = 'fas fa-times';
+      } else {
+        navBar.className = 'navBar';
+        bar.className = 'fas fa-bars';
+      }
+    }
+        // Function to handle Tailwind's use of slashes in class names
+        const escapeName = (name) => name.trim().replace(/([^a-z0-9\w-:/]+)/gi, '-');
+
+        const editor = grapesjs.init({
+            container: '#gjs',
+            height: '100%',
+            fromElement: false,
+            selectorManager: { escapeName },
+            plugins: ['grapesjs-tailwind'],
+            blockManager: {
+                appendTo: '#blocks',
+                blocks: [
+                    {
+                        id: 'section',
+                        label: 'Section',
+                        content: '<section>This is a section</section>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'heading',
+                        label: 'Heading',
+                        content: '<h2>This is a heading</h2>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'text',
+                        label: 'Text',
+                        content: '<p>This is a paragraph</p>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'list',
+                        label: 'List',
+                        content: '<ul><li>Item 1</li><li>Item 2</li></ul>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'image',
+                        label: 'Image',
+                        content: '<img src="https://via.placeholder.com/150" alt="Placeholder Image">',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'button',
+                        label: 'Button',
+                        content: '<button>Click Me</button>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'form',
+                        label: 'Form',
+                        content: '<form><input type="text" placeholder="Name"/><button>Submit</button></form>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'link',
+                        label: 'Link',
+                        content: '<a href="#">This is a link</a>',
+                        category: 'Basic',
+                    },
+                    {
+                        id: 'video',
+                        label: 'Video',
+                        content: '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>',
+                        category: 'Basic',
+                    },
+                ],
+            },
+        });
+    </script>
+</body>
+</html>
